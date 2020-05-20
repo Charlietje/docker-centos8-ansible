@@ -33,6 +33,11 @@ RUN pip3 install $pip_packages
 # Disable requiretty.
 RUN sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
 
+# Remove unnecessary getty and udev targets that can result in high CPU usage when using
+# multiple containers with Molecule (https://github.com/ansible/molecule/issues/1104)
+RUN rm -rf /lib/systemd/system/systemd*udev* \
+  && rm -f /lib/systemd/system/getty.target
+
 # Install Ansible inventory file.
 RUN mkdir -p /etc/ansible
 RUN echo -e '[local]\nlocalhost ansible_connection=local' > /etc/ansible/hosts
