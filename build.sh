@@ -1,3 +1,3 @@
 #!/bin/bash -
-docker build -t geerlingguy/docker-centos8-ansible .
+docker build -t opscharlie/docker-centos8-ansible .
 
